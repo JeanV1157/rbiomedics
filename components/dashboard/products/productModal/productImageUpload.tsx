@@ -2,163 +2,170 @@
 
 import Image from "next/image";
 import { ImagePlus, Trash2 } from "lucide-react";
+import { ProductImagePreview } from "@/types/product-image-preview";
+import { ALLOWED_IMAGE_TYPES } from "@/types/product-image";
 
 interface ProductImageUploadProps {
-  image: File | null;
-  preview: string | null;
+  images: ProductImagePreview[];
 
-  onChange: (file: File | null) => void;
+  onAdd: (files: File[]) => void;
 
-  onRemove: () => void;
+  onRemove: (index: number) => void;
 }
 
 export default function ProductImageUpload({
-  image,
-  preview,
-  onChange,
+  images,
+  onAdd,
   onRemove,
 }: ProductImageUploadProps) {
-  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-
-    if (!file) return;
-
-    onChange(file);
-  }
-  console.log("esto es preview=", preview);
-
   return (
     <section className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm sm:p-5 lg:p-6">
       <div className="mb-6">
         <h3 className="text-lg font-semibold text-[var(--primary-dark)]">
-          Imagen del producto
+          Imágenes del producto
         </h3>
 
         <p className="mt-1 text-sm text-gray-500">
-          Selecciona una imagen desde tu dispositivo.
+          Puedes seleccionar una o varias imágenes desde tu dispositivo.
         </p>
       </div>
 
-      {!preview ? (
-        <label
+      <label
+        className="
+          flex
+          min-h-[220px]
+          cursor-pointer
+          flex-col
+          items-center
+          justify-center
+          rounded-2xl
+          border-2
+          border-dashed
+          border-gray-300
+          bg-gray-50
+          p-8
+          text-center
+          transition
+          hover:border-[var(--primary)]
+          hover:bg-gray-100
+        "
+      >
+        <ImagePlus size={48} className="mb-4 text-gray-400" />
+
+        <span className="text-base font-semibold text-gray-700">
+          Agregar imágenes
+        </span>
+
+        <span className="mt-2 text-sm text-gray-500">
+          JPG • PNG • WEBP • SVG
+        </span>
+
+        <span className="mt-1 text-xs text-gray-400">
+          Puedes seleccionar varias imágenes al mismo tiempo.
+        </span>
+
+        <input
+          hidden
+          multiple
+          type="file"
+          accept="
+            image/png,
+            image/jpeg,
+            image/jpg,
+            image/webp,
+            image/svg+xml
+          "
+          onChange={(e) => {
+            const files = Array.from(e.target.files ?? []);
+
+            if (files.length === 0) return;
+
+            onAdd(files);
+
+            e.target.value = "";
+          }}
+        />
+      </label>
+
+      {images.length > 0 && (
+        <div
           className="
-            flex
-            min-h-[240px]
-            cursor-pointer
-            flex-col
-            items-center
-            justify-center
-            rounded-2xl
-            border-2
-            border-dashed
-            border-gray-300
-            bg-gray-50
-            p-8
-            text-center
-            transition
-            hover:border-[var(--primary)]
-            hover:bg-gray-100
+            mt-8
+            grid
+            grid-cols-2
+            gap-4
+
+            sm:grid-cols-3
+
+            lg:grid-cols-4
+
+            xl:grid-cols-5
           "
         >
-          <ImagePlus size={48} className="mb-4 text-gray-400" />
-
-          <span className="text-base font-semibold text-gray-700">
-            Seleccionar imagen
-          </span>
-
-          <span className="mt-2 text-sm text-gray-500">
-            JPG • PNG • WEBP • SVG
-          </span>
-
-          <span className="mt-1 text-xs text-gray-400">
-            También puedes hacerlo desde tu celular.
-          </span>
-
-          <input
-            hidden
-            type="file"
-            accept="
-              image/png,
-              image/jpeg,
-              image/jpg,
-              image/webp,
-              image/svg+xml
-            "
-            onChange={handleFileChange}
-          />
-        </label>
-      ) : (
-        <div className="space-y-4">
-          <div
-            className="
-              relative
-              overflow-hidden
-              rounded-2xl
-              border
-              bg-gray-50
-            "
-          >
-            <Image
-              src={preview}
-              alt="Preview"
-              width={1200}
-              height={800}
+          {images.map((item, index) => (
+            <div
+              key={item.id ?? item.preview}
               className="
-                h-56
-                w-full
-                object-contain
-
-                sm:h-72
-
-                lg:h-80
-              "
-            />
-          </div>
-
-          <div
-            className="
-              flex
-              flex-col
-              gap-3
-
-              sm:flex-row
-              sm:justify-between
-              sm:items-center
-            "
-          >
-            <div>
-              <p className="font-medium text-gray-800">{image?.name}</p>
-
-              <p className="text-sm text-gray-500">
-                {image ? `${(image.size / 1024 / 1024).toFixed(2)} MB` : ""}
-              </p>
-            </div>
-
-            <button
-              type="button"
-              onClick={onRemove}
-              className="
-                inline-flex
-                items-center
-                justify-center
-                gap-2
-                rounded-xl
+                relative
+                overflow-hidden
+                rounded-2xl
                 border
-                border-red-200
-                bg-red-50
-                px-4
-                py-2
-                text-sm
-                font-medium
-                text-red-600
-                transition
-                hover:bg-red-100
+                bg-gray-50
               "
             >
-              <Trash2 size={16} />
-              Eliminar imagen
-            </button>
-          </div>
+              <Image
+                src={item.preview}
+                alt={`Imagen ${index + 1}`}
+                width={500}
+                height={500}
+                className="
+                  aspect-square
+                  w-full
+                  object-cover
+                "
+              />
+
+              <button
+                type="button"
+                onClick={() => onRemove(index)}
+                className="
+                  absolute
+                  right-2
+                  top-2
+
+                  flex
+                  h-9
+                  w-9
+                  items-center
+                  justify-center
+
+                  rounded-full
+
+                  bg-red-500
+
+                  text-white
+
+                  transition
+
+                  hover:bg-red-600
+                "
+              >
+                <Trash2 size={16} />
+              </button>
+
+              <div className="border-t bg-white p-3">
+                <p className="truncate text-sm font-medium">
+                  {item.file ? item.file.name : "Imagen guardada"}
+                </p>
+
+                <p className="mt-1 text-xs text-gray-500">
+                  {item.file
+                    ? `${(item.file.size / 1024 / 1024).toFixed(2)} MB`
+                    : "Ya almacenada en Supabase"}
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
       )}
     </section>

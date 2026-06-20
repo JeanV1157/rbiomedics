@@ -6,12 +6,17 @@ import { X } from "lucide-react";
 import { Category } from "@/types/category";
 import { Product } from "@/types/product";
 import { ProductSpecificationForm } from "@/types/specification";
+import { ProductImagePreview } from "@/types/product-image-preview";
 import ProductBasicInfo from "./productBasicInfo";
 import ProductImageUpload from "./productImageUpload";
 import ProductCategorySelect from "./productCategorySelect";
 import ProductSpecifications from "./productSpecifications";
 import { ProductFormData } from "@/types/product-form";
 import { getProductImageUrl } from "@/services/productImage.service";
+import {
+  isValidImageFile,
+  getImageValidationError,
+} from "@/types/product-image";
 
 interface ProductModalProps {
   open: boolean;
@@ -24,7 +29,8 @@ interface ProductModalProps {
 
   onSave: (data: {
     formData: ProductFormData;
-    image: File | null;
+    images: File[];
+    imagesToDelete: string[];
   }) => Promise<void>;
 }
 
@@ -51,13 +57,22 @@ export default function ProductModal({
   onClose,
   onSave,
 }: ProductModalProps) {
+  const [productImages, setProductImages] = useState<ProductImagePreview[]>([]);
+
+  const [deletedImages, setDeletedImages] = useState<ProductImagePreview[]>([]);
+
   const [formData, setFormData] = useState<ProductFormData>(emptyForm);
 
-  const [imageFile, setImageFile] = useState<File | null>(null);
-
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
-
   const [loading, setLoading] = useState(false);
+
+  const isFormValid =
+    formData.title.trim() !== "" &&
+    formData.description.trim() !== "" &&
+    formData.price !== null &&
+    formData.price > 0 &&
+    formData.category_id > 0 &&
+    formData.subcategory_id > 0 &&
+    productImages.length > 0;
 
   useEffect(() => {
     if (!open) return;
@@ -76,39 +91,74 @@ export default function ProductModal({
 
         subcategory_id: initialData.subcategory_id,
 
-        specifications: [],
+        specifications: initialData.specifications ?? [],
       });
 
-      if (initialData.image) {
-        setImagePreview(getProductImageUrl(initialData.image));
-      }
+      const images = [...(initialData.images ?? [])]
+        .sort((a, b) => a.sort_order - b.sort_order)
+        .map((item) => ({
+          id: item.id,
+
+          image: item.image,
+
+          preview: getProductImageUrl(item.image),
+        }));
+
+      setProductImages(images);
+
+      setDeletedImages([]);
 
       return;
     }
 
     setFormData(emptyForm);
 
-    setImageFile(null);
+    setProductImages([]);
 
-    setImagePreview(null);
+    setDeletedImages([]);
   }, [initialData, open]);
 
-  function handleImageChange(file: File | null) {
-    setImageFile(file);
+  function handleAddImages(files: File[]) {
+    const validImages: ProductImagePreview[] = [];
+    const errors: string[] = [];
 
-    if (!file) {
-      setImagePreview(null);
+    files.forEach((file) => {
+      // Validar archivo
+      const validationError = getImageValidationError(file);
 
-      return;
+      if (validationError) {
+        errors.push(`${file.name}: ${validationError}`);
+        return;
+      }
+
+      // Si es válido, agregar a la lista
+      validImages.push({
+        image: "",
+        file,
+        preview: URL.createObjectURL(file),
+      });
+    });
+
+    // TODO: Mostrar errores de validación al usuario
+    if (errors.length > 0) {
+      console.warn("Errores de validación de imágenes:", errors);
     }
 
-    setImagePreview(URL.createObjectURL(file));
+    setProductImages((prev) => [...prev, ...validImages]);
   }
 
-  function handleRemoveImage() {
-    setImageFile(null);
+  function handleRemoveImage(index: number) {
+    const image = productImages[index];
 
-    setImagePreview(null);
+    if (image.id) {
+      setDeletedImages((prev) => [...prev, image]);
+    }
+
+    if (image.preview.startsWith("blob:")) {
+      URL.revokeObjectURL(image.preview);
+    }
+
+    setProductImages((prev) => prev.filter((_, i) => i !== index));
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -120,18 +170,20 @@ export default function ProductModal({
       await onSave({
         formData,
 
-        image: imageFile,
+        images: productImages
+          .filter((item) => item.file)
+          .map((item) => item.file!),
+
+        imagesToDelete: deletedImages.map((item) => item.image),
       });
 
       onClose();
     } catch (error) {
-      console.error("Error al guardar producto:", error);
-      // Aquí puedes agregar notificación al usuario (toast, modal, etc.)
+      console.error(error);
     } finally {
       setLoading(false);
     }
   }
-
   if (!open) return null;
 
   return (
@@ -246,9 +298,8 @@ export default function ProductModal({
               />
 
               <ProductImageUpload
-                image={imageFile}
-                preview={imagePreview}
-                onChange={handleImageChange}
+                images={productImages}
+                onAdd={handleAddImages}
                 onRemove={handleRemoveImage}
               />
 
@@ -332,7 +383,7 @@ export default function ProductModal({
 
               <button
                 type="submit"
-                disabled={loading}
+                disabled={loading || !isFormValid}
                 className="
                   w-full
                   rounded-xl

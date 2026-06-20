@@ -4,19 +4,7 @@ import { useMemo, useState } from "react";
 import ProductCard from "../cards/productCard";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { Category } from "@/types/category";
-
-export interface Product {
-  id: number;
-  title: string;
-  description: string;
-  longDescription?: string;
-  image: string;
-  categoryId: number;
-  subcategoryId: number;
-  price?: number;
-  specifications?: ProductSpecification[];
-  relatedProducts?: number[];
-}
+import { Product } from "@/types/product";
 
 export interface ProductSpecification {
   label: string;
@@ -49,10 +37,10 @@ export default function ProductCatalog({ products, categories }: Props) {
         product.description.toLowerCase().includes(search.toLowerCase());
 
       const matchesCategory =
-        !selectedCategory || product.categoryId === selectedCategory;
+        !selectedCategory || product.category_id === selectedCategory;
 
       const matchesSubcategory =
-        !selectedSubcategory || product.subcategoryId === selectedSubcategory;
+        !selectedSubcategory || product.subcategory_id === selectedSubcategory;
 
       return matchesSearch && matchesCategory && matchesSubcategory;
     });
@@ -197,7 +185,7 @@ export default function ProductCatalog({ products, categories }: Props) {
                       {/* Subcategorías */}
                       {isOpen && (
                         <div className="bg-[var(--surface-muted)]">
-                          {category.subcategories.map((subcategory) => (
+                          {category.subcategories?.map((subcategory) => (
                             <button
                               key={subcategory.id}
                               onClick={() => {
@@ -272,11 +260,7 @@ export default function ProductCatalog({ products, categories }: Props) {
                 {currentProducts.map((product) => (
                   <ProductCard
                     key={product.id}
-                    id={product.id}
-                    image={product.image}
-                    title={product.title}
-                    description={product.description}
-                    price={product.price}
+                    product={product}
                     buttonText="Leer más"
                   />
                 ))}

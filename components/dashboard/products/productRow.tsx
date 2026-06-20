@@ -7,7 +7,7 @@ import ActionButtons from "../ui/actionButtons";
 import { Product } from "@/types/product";
 import { Category } from "@/types/category";
 
-import { getProductImageUrl } from "@/services/productImage.service";
+import { getProductCoverImageUrl } from "@/services/productImageHelper.service";
 
 interface Props {
   product: Product;
@@ -31,14 +31,14 @@ export default function ProductRow({
     (item) => item.id === product.subcategory_id,
   );
 
+  // Obtener imagen de portada de forma consistente
+  const coverImageUrl = getProductCoverImageUrl(product);
+
   return (
     <tr className="border-b border-[var(--border)]">
       <td className="p-4">
         <Image
-          src={
-            getProductImageUrl(product.image) ||
-            "/images/product-placeholder.png"
-          }
+          src={coverImageUrl}
           alt={product.title}
           width={60}
           height={60}

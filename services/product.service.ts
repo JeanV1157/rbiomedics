@@ -6,11 +6,12 @@ export async function getProducts(): Promise<Product[]> {
     .from("products")
     .select(
       `
-        *,
-        specifications:product_specifications(*)
-      `,
+      *,
+      specifications:product_specifications(*),
+      images:product_images(*)
+    `,
     )
-    .order("id", { ascending: false });
+    .order("created_at", { ascending: false });
 
   if (error) {
     throw new Error(error.message);
@@ -19,13 +20,37 @@ export async function getProducts(): Promise<Product[]> {
   return data ?? [];
 }
 
-interface ProductPayload {
+export async function getProduct(id: number): Promise<Product> {
+  const { data, error } = await supabase
+    .from("products")
+    .select(
+      `
+      *,
+      specifications:product_specifications(*),
+      images:product_images(*)
+    `,
+    )
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+}
+
+export interface ProductPayload {
   title: string;
+
   description: string;
+
   long_description: string | null;
-  image: string | null;
+
   price: number | null;
+
   category_id: number;
+
   subcategory_id: number;
 }
 
@@ -35,9 +60,10 @@ export async function createProduct(product: ProductPayload): Promise<Product> {
     .insert(product)
     .select(
       `
-        *,
-        specifications:product_specifications(*)
-      `,
+      *,
+      specifications:product_specifications(*),
+      images:product_images(*)
+    `,
     )
     .single();
 
@@ -58,9 +84,10 @@ export async function updateProduct(
     .eq("id", id)
     .select(
       `
-        *,
-        specifications:product_specifications(*)
-      `,
+      *,
+      specifications:product_specifications(*),
+      images:product_images(*)
+    `,
     )
     .single();
 

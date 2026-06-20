@@ -10,11 +10,10 @@ import ProductTable from "@/components/dashboard/products/productTablet";
 import { ProductFormData } from "@/types/product-form";
 import { Category } from "@/types/category";
 import ProductModal from "@/components/dashboard/products/productModal/productModal";
-import { deleteProduct } from "@/services/product.service";
-
 import {
   createProductWithRelations,
   updateProductWithRelations,
+  deleteProductWithRelations,
 } from "@/services/productCrud.service";
 
 interface ProductsClientProps {
@@ -55,17 +54,20 @@ export default function ProductsClient({
 
   async function handleSaveProduct({
     formData,
-    image,
+    images,
+    imagesToDelete = [],
   }: {
     formData: ProductFormData;
-    image: File | null;
+    images: File[];
+    imagesToDelete?: string[];
   }) {
     try {
       if (editingProduct) {
         const updatedProduct = await updateProductWithRelations({
           product: editingProduct,
           formData,
-          image,
+          images,
+          imagesToDelete,
         });
 
         setProducts((prev) =>
@@ -76,7 +78,7 @@ export default function ProductsClient({
       } else {
         const newProduct = await createProductWithRelations({
           formData,
-          image,
+          images,
         });
 
         setProducts((prev) => [...prev, newProduct]);
@@ -95,11 +97,14 @@ export default function ProductsClient({
 
   async function handleDeleteProduct(product: Product) {
     try {
-      await deleteProduct(product.id);
+      await deleteProductWithRelations(product);
 
       setProducts((prev) => prev.filter((item) => item.id !== product.id));
     } catch (error) {
-      console.error(error);
+      const errorMessage =
+        error instanceof Error ? error.message : JSON.stringify(error);
+      console.error("Error al eliminar producto:", errorMessage);
+      // TODO: Agregar notificación al usuario (toast, modal, etc.)
     }
   }
 

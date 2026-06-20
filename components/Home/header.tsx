@@ -54,12 +54,12 @@ export default function Header() {
               INICIO
             </Link>
 
-            <a
-              href="#services"
+            <Link
+              href="/#services"
               className="font-semibold hover:text-[var(--primary)] transition"
             >
               SERVICIOS
-            </a>
+            </Link>
 
             <Link
               href="/product"

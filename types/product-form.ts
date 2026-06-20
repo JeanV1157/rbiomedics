@@ -1,3 +1,5 @@
+import { ProductSpecificationForm } from "./specification";
+
 export interface ProductFormData {
   title: string;
 

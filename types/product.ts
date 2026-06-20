@@ -1,17 +1,26 @@
+import { ProductImage } from "./product-image";
+
 export interface Product {
   id: number;
+
   title: string;
+
   description: string;
-  long_description?: string;
-  image: string;
+
+  long_description: string | null;
+
+  price: number | null;
 
   category_id: number;
+
   subcategory_id: number;
 
-  price?: number;
   created_at: string;
 
   updated_at: string;
+
+  images?: ProductImage[];
+
   specifications?: ProductSpecification[];
 }
 

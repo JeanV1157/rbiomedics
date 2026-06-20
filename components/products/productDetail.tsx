@@ -2,20 +2,25 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { Product } from "./productCatalog";
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, ShieldCheck, Store } from "lucide-react";
 import ProductCard from "../cards/productCard";
-import { PRODUCTS } from "@/data/products";
-import { CATEGORIES } from "@/data/categories";
+import { Product } from "@/types/product";
+import { Category } from "@/types/category";
 
-interface Props {
+interface ProductDetailProps {
   product: Product;
+  categories: Category[];
+  relatedProducts?: Product[];
 }
 
-export default function ProductDetail({ product }: Props) {
+export default function ProductDetail({
+  product,
+  relatedProducts = [],
+  categories,
+}: ProductDetailProps) {
   const [zoom, setZoom] = useState(false);
-
+  const [selectedImage, setSelectedImage] = useState(0);
   const [position, setPosition] = useState({
     x: 50,
     y: 50,
@@ -30,15 +35,19 @@ export default function ProductDetail({ product }: Props) {
 
     setPosition({ x, y });
   };
-  const relatedProducts = PRODUCTS.filter((p) =>
-    product.relatedProducts?.includes(p.id),
+
+  const images = product.images ?? [];
+
+  const mainImage = images[selectedImage]?.image ?? "/images/placeholder.webp";
+
+  const category = categories.find(
+    (category) => category.id === product.category_id,
   );
 
-  const category = CATEGORIES.find((c) => c.id === product.categoryId);
-
-  const subcategory = category?.subcategories.find(
-    (s) => s.id === product.subcategoryId,
+  const subcategory = category?.subcategories?.find(
+    (subcategory) => subcategory.id === product.subcategory_id,
   );
+
   return (
     <section className="bg-white py-10 lg:py-16">
       <div className="mx-auto max-w-7xl px-4">
@@ -64,43 +73,112 @@ export default function ProductDetail({ product }: Props) {
 
           <span className="text-[var(--muted)]">{subcategory?.name}</span>
         </div>
-        <div className="grid gap-10 lg:grid-cols-2">
+        <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr]">
           {/* Imagen */}
-          <div
-            className="
-              overflow-hidden
-              rounded-3xl
-              border
-              border-[var(--border)]
-              bg-[var(--surface)]
-              p-6
-            "
-          >
+          <div className="flex gap-4">
+            {/* Miniaturas */}
+            {images.length > 1 && (
+              <div className="hidden md:flex flex-col gap-3">
+                {images.map((image, index) => (
+                  <button
+                    key={image.id}
+                    onClick={() => setSelectedImage(index)}
+                    className={`
+            relative
+            h-20
+            w-20
+            overflow-hidden
+            rounded-xl
+            border-2
+            bg-white
+            transition
+            ${
+              selectedImage === index
+                ? "border-[var(--primary)]"
+                : "border-[var(--border)]"
+            }
+          `}
+                  >
+                    <Image
+                      src={image.image}
+                      alt={`${product.title}-${index}`}
+                      fill
+                      className="object-contain p-2"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Imagen principal */}
             <div
-              onMouseEnter={() => setZoom(true)}
-              onMouseLeave={() => setZoom(false)}
-              onMouseMove={handleMouseMove}
               className="
-                aspect-square
-                overflow-hidden
-                cursor-zoom-in
-              "
+      flex-1
+      overflow-hidden
+      rounded-3xl
+      border
+      border-[var(--border)]
+      bg-[var(--surface)]
+      p-6
+    "
             >
-              <Image
-                src={product.image}
-                alt={product.title}
-                width={1000}
-                height={1000}
-                priority
-                className="h-full w-full object-contain"
-                style={{
-                  transform: zoom ? "scale(2)" : "scale(1)",
-                  transformOrigin: `${position.x}% ${position.y}%`,
-                  transition: "transform .15s ease-out",
-                }}
-              />
+              <div
+                onMouseEnter={() => setZoom(true)}
+                onMouseLeave={() => setZoom(false)}
+                onMouseMove={handleMouseMove}
+                className="
+        aspect-square
+        overflow-hidden
+        cursor-zoom-in
+      "
+              >
+                <Image
+                  src={mainImage}
+                  alt={product.title}
+                  width={1000}
+                  height={1000}
+                  priority
+                  className="h-full w-full object-contain"
+                  style={{
+                    transform: zoom ? "scale(2)" : "scale(1)",
+                    transformOrigin: `${position.x}% ${position.y}%`,
+                    transition: "transform .15s ease-out",
+                  }}
+                />
+              </div>
             </div>
           </div>
+          {images.length > 1 && (
+            <div className="mt-4 flex gap-3 overflow-x-auto md:hidden">
+              {images.map((image, index) => (
+                <button
+                  key={image.id}
+                  onClick={() => setSelectedImage(index)}
+                  className={`
+          relative
+          h-20
+          w-20
+          shrink-0
+          overflow-hidden
+          rounded-xl
+          border-2
+          ${
+            selectedImage === index
+              ? "border-[var(--primary)]"
+              : "border-[var(--border)]"
+          }
+        `}
+                >
+                  <Image
+                    src={image.image}
+                    alt={`${product.title}-${index}`}
+                    fill
+                    className="object-contain p-2"
+                  />
+                </button>
+              ))}
+            </div>
+          )}
 
           {/* Información */}
           <div className="flex flex-col justify-center">
@@ -135,7 +213,7 @@ export default function ProductDetail({ product }: Props) {
               className="
                 mt-6
                 leading-relaxed
-                text-[var(--muted)]
+                text-[var(--muted)] font-semibold
               "
             >
               {product.description}
@@ -158,7 +236,17 @@ export default function ProductDetail({ product }: Props) {
                 </p>
               </div>
             )}
+            <div className="mt-6 space-y-3">
+              <div className="flex items-center gap-2 text-[var(--muted)]">
+                <Store size={18} />
+                <span className="font-medium">Tienda Autorizada</span>
+              </div>
 
+              <div className="flex items-center gap-2 text-[var(--muted)]">
+                <ShieldCheck size={18} />
+                <span className="font-medium">Producto con Garantía</span>
+              </div>
+            </div>
             <div className="mt-10 flex gap-4">
               <button
                 className="
@@ -217,7 +305,7 @@ export default function ProductDetail({ product }: Props) {
               text-[var(--muted)]
             "
           >
-            {product.longDescription}
+            {product.long_description}
           </p>
         </div>
         {product.specifications && product.specifications.length > 0 && (
@@ -302,14 +390,10 @@ export default function ProductDetail({ product }: Props) {
         gap-6
       "
             >
-              {relatedProducts.map((related) => (
+              {relatedProducts.map((relatedProduct) => (
                 <ProductCard
-                  key={related.id}
-                  id={product.id}
-                  image={related.image}
-                  title={related.title}
-                  description={related.description}
-                  price={related.price}
+                  key={relatedProduct.id}
+                  product={relatedProduct}
                   buttonText="Leer más"
                 />
               ))}

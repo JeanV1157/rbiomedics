@@ -3,25 +3,19 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { Product } from "@/types/product";
+
 interface ProductCardProps {
-  id: number;
-  image: string;
-  title: string;
-  description: string;
-  buttonText: string;
-  price?: string | number;
+  product: Product;
+  buttonText?: string;
   onButtonClick?: () => void;
 }
 
-export default function ProductCard({
-  id,
-  image,
-  title,
-  description,
-  buttonText,
-  price,
-  onButtonClick,
-}: ProductCardProps) {
+export default function ProductCard({ product }: ProductCardProps) {
+  const { id, title, description, price, images } = product;
+
+  const image = images?.[0]?.image ?? "/images/placeholder.webp";
+
   return (
     <div
       className="
@@ -89,12 +83,23 @@ export default function ProductCard({
         text-center
         text-[var(--primary-dark)]
         line-clamp-2
-        min-h-[48px]
+        min-h-auto
       "
           >
             {title}
           </h3>
-
+          <p
+            className="
+      mt-2
+      text-center
+      text-sm
+      text-[var(--muted)]
+      line-clamp-2
+      min-h-auto
+    "
+          >
+            {description}
+          </p>
           {price != null && (
             <p
               className="

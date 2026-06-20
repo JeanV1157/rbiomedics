@@ -13,10 +13,14 @@ export async function getDashboardStats() {
     .from("products")
     .select("*", { count: "exact", head: true });
 
+  const { count: totalHeroImages } = await supabase
+    .from("hero_images")
+    .select("*", { count: "exact", head: true });
+
   return {
     totalCategories: totalCategories ?? 0,
     totalSubcategories: totalSubcategories ?? 0,
     totalProducts: totalProducts ?? 0,
-    totalHeroImages: 0,
+    totalHeroImages: totalHeroImages ?? 0,
   };
 }
