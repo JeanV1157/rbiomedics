@@ -34,6 +34,9 @@ interface SupabaseProduct {
   product_images: SupabaseProductImage[];
   product_specifications: SupabaseProductSpecification[];
 }
+type TProductImage = {
+  image: string;
+};
 
 export async function getPublicProducts(): Promise<Product[]> {
   const { data, error } = await supabase
@@ -203,7 +206,7 @@ export async function getPublicProductById(id: number) {
   return {
     ...data,
     images:
-      data.product_images?.map((image) => ({
+      data.product_images?.map((image: TProductImage) => ({
         ...image,
         image: getProductImageUrl(image.image),
       })) ?? [],
