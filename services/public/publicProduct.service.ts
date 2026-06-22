@@ -3,6 +3,38 @@ import { Product } from "@/types/product";
 import { ProductImage } from "@/types/product-image";
 import { getProductImageUrl } from "../productImage.service";
 
+interface SupabaseProductImage {
+  id: number;
+  product_id: number;
+  image: string;
+  sort_order: number;
+  created_at: string;
+}
+
+interface SupabaseProductSpecification {
+  id: number;
+  product_id: number;
+  label: string;
+  value: string;
+  created_at: string;
+}
+
+interface SupabaseProduct {
+  id: number;
+  title: string;
+  description: string;
+  long_description: string | null;
+  price: number | null;
+  category_id: number;
+  subcategory_id: number;
+  is_featured: boolean;
+  featured_order: number;
+  created_at: string;
+  updated_at: string;
+  product_images: SupabaseProductImage[];
+  product_specifications: SupabaseProductSpecification[];
+}
+
 export async function getPublicProducts(): Promise<Product[]> {
   const { data, error } = await supabase
     .from("products")
@@ -15,6 +47,8 @@ export async function getPublicProducts(): Promise<Product[]> {
       price,
       category_id,
       subcategory_id,
+      is_featured,
+      featured_order,
       created_at,
       updated_at,
       product_images(
@@ -40,6 +74,77 @@ export async function getPublicProducts(): Promise<Product[]> {
   }
 
   return (data ?? []).map(
+    (product: SupabaseProduct): Product => ({
+      id: product.id,
+      title: product.title,
+      description: product.description,
+      long_description: product.long_description,
+      price: product.price,
+      category_id: product.category_id,
+      subcategory_id: product.subcategory_id,
+      is_featured: product.is_featured,
+      featured_order: product.featured_order,
+      created_at: product.created_at,
+      updated_at: product.updated_at,
+      images: (product.product_images ?? [])
+        .sort(
+          (a: SupabaseProductImage, b: SupabaseProductImage) =>
+            a.sort_order - b.sort_order,
+        )
+        .map(
+          (img: SupabaseProductImage): ProductImage => ({
+            id: img.id,
+            product_id: img.product_id,
+            image: getProductImageUrl(img.image),
+            sort_order: img.sort_order,
+            created_at: img.created_at,
+          }),
+        ),
+      specifications: product.product_specifications ?? [],
+    }),
+  );
+}
+
+export async function getFeaturedProducts(): Promise<Product[]> {
+  const { data, error } = await supabase
+    .from("products")
+    .select(
+      `
+      id,
+      title,
+      description,
+      long_description,
+      price,
+      category_id,
+      subcategory_id,
+      is_featured,
+      featured_order,
+      created_at,
+      updated_at,
+      product_images(
+        id,
+        product_id,
+        image,
+        sort_order,
+        created_at
+      ),
+      product_specifications(
+        id,
+        product_id,
+        label,
+        value,
+        created_at
+      )
+    `,
+    )
+    .eq("is_featured", true)
+    .order("featured_order", { ascending: true });
+
+  if (error) {
+    throw error;
+  }
+
+  return (data ?? []).map(
     (product: any): Product => ({
       id: product.id,
       title: product.title,
@@ -48,6 +153,8 @@ export async function getPublicProducts(): Promise<Product[]> {
       price: product.price,
       category_id: product.category_id,
       subcategory_id: product.subcategory_id,
+      is_featured: product.is_featured,
+      featured_order: product.featured_order,
       created_at: product.created_at,
       updated_at: product.updated_at,
       images: (product.product_images ?? [])

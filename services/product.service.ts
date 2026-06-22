@@ -52,6 +52,10 @@ export interface ProductPayload {
   category_id: number;
 
   subcategory_id: number;
+
+  is_featured: boolean;
+
+  featured_order: number;
 }
 
 export async function createProduct(product: ProductPayload): Promise<Product> {

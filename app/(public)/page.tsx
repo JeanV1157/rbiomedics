@@ -1,58 +1,10 @@
 import BrandsCarousel from "@/components/Home/brandsCarousel";
 import ClientsCarousel from "@/components/Home/clientsUs";
-import FeaturedProducts from "@/components/Home/featuredProducts";
+import FeaturedProductsClient from "./featuredProductsClient";
 import HeroBanner from "@/components/Home/herobanner";
 import NewsCarousel from "@/components/Home/newsCarousel";
 import ServicesSection from "@/components/Home/servicesSection";
-
-const FEATURED_PRODUCTS = [
-  {
-    id: 1,
-    image: "/images/products/microscopio.jpg",
-    title: "Probetas",
-    description: "B-292PLI OPTIKA",
-    buttonText: "Leer más",
-  },
-  {
-    id: 2,
-    image: "/images/products/microscopio.jpg",
-    title: "Microscopio Binocular",
-    description: "B-150D-BRPL OPTIKA",
-    price: "120",
-    buttonText: "Leer más",
-  },
-  {
-    id: 3,
-    image: "/images/products/microscopio.jpg",
-    title: "Centrifuga",
-    description: "B-159 OPTIKA",
-    price: "120",
-    buttonText: "Leer más",
-  },
-  {
-    id: 4,
-    image: "/images/products/microscopio.jpg",
-    title: "Jean",
-    description: "B-159 OPTIKA",
-
-    buttonText: "Leer más",
-  },
-  {
-    id: 5,
-    image: "/images/products/microscopio.jpg",
-    title: "Frank",
-    description: "B-159 OPTIKA",
-    price: "120",
-    buttonText: "Leer más",
-  },
-];
-
-const BANNER_DATA = {
-  image: "",
-  title: "OPTIKA\nMICROSCOPES\nITALY",
-  subtitle: "Representantes en Perú",
-  buttonText: "VER MÁS",
-};
+import CustomerService from "@/components/Home/customerService";
 
 const BRANDS = [
   {
@@ -166,15 +118,12 @@ export default function Home() {
       <HeroBanner />
 
       <ServicesSection />
+      <div className="flex justify-center py-6">
+        <div className="h-px w-150 bg-[var(--border)]" />
+      </div>
 
-      <FeaturedProducts
-        sectionTitle="Productos Destacados"
-        products={FEATURED_PRODUCTS}
-        bannerImage={BANNER_DATA.image}
-        bannerTitle={BANNER_DATA.title}
-        bannerSubtitle={BANNER_DATA.subtitle}
-        bannerButtonText={BANNER_DATA.buttonText}
-      />
+      <FeaturedProductsClient />
+      <CustomerService />
       <BrandsCarousel title="Nuestros Socios Tecnológicos" brands={BRANDS} />
 
       <NewsCarousel title="Novedades" items={news} />

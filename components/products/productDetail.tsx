@@ -49,7 +49,7 @@ export default function ProductDetail({
   );
 
   return (
-    <section className="bg-white py-10 lg:py-16">
+    <section className="bg-gray-50 py-10 lg:py-16">
       <div className="mx-auto max-w-7xl px-4">
         {/* Breadcrumb */}
         <div className="mb-8 flex flex-wrap items-center gap-2 text-sm">
@@ -193,6 +193,7 @@ export default function ProductDetail({
                 text-sm
                 font-semibold
                 text-[var(--primary)]
+                uppercase
               "
             >
               {subcategory?.name}
@@ -286,6 +287,7 @@ export default function ProductDetail({
             border
             border-[var(--border)]
             p-8
+            bg-white
           "
         >
           <h2
@@ -333,6 +335,7 @@ export default function ProductDetail({
             text-xl
             font-bold
             text-[var(--primary-dark)]
+            bg-white
           "
               >
                 Especificaciones Técnicas
@@ -344,7 +347,7 @@ export default function ProductDetail({
             </div>
 
             {/* Content */}
-            <div className="p-6 md:p-8">
+            <div className="p-6 md:p-8 bg-white">
               <ul className="space-y-4">
                 {product.specifications.map((spec, index) => (
                   <li

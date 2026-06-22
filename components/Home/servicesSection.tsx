@@ -75,7 +75,7 @@ export default function ServicesSection() {
   return (
     <section id="services" className="relative py-20 overflow-hidden">
       {/* Imagen de fondo */}
-      <Image src={SERVICES_BG} alt="" fill priority className="object-cover" />
+
       {/* Overlay */}
       <div className="absolute inset-0 bg-white/90" />
       <div className="relative w-full mx-auto px-4 md:px-6 lg:px-8">
@@ -213,6 +213,9 @@ export default function ServicesSection() {
             <ChevronRight size={24} />
           </button>
         </div>
+      </div>
+      <div className="flex justify-center py-6">
+        <div className="h-px w-32 bg-[var(--border)]" />
       </div>
     </section>
   );

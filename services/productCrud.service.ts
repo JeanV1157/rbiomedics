@@ -52,6 +52,8 @@ export async function createProductWithRelations({
       price: formData.price,
       category_id: formData.category_id,
       subcategory_id: formData.subcategory_id,
+      is_featured: formData.is_featured,
+      featured_order: formData.featured_order,
     });
 
     productId = product.id;
@@ -131,6 +133,8 @@ export async function updateProductWithRelations({
       price: formData.price,
       category_id: formData.category_id,
       subcategory_id: formData.subcategory_id,
+      is_featured: formData.is_featured,
+      featured_order: formData.featured_order,
     });
 
     // 2-3. Eliminar imágenes especificadas

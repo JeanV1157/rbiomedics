@@ -5,10 +5,18 @@ interface ProductBasicInfoProps {
   description: string;
   long_description: string;
   price: number | null;
+  is_featured: boolean;
+  featured_order: number;
 
   onChange: (
-    field: "title" | "description" | "long_description" | "price",
-    value: string | number | null,
+    field:
+      | "title"
+      | "description"
+      | "long_description"
+      | "price"
+      | "is_featured"
+      | "featured_order",
+    value: string | number | null | boolean,
   ) => void;
 }
 
@@ -17,6 +25,8 @@ export default function ProductBasicInfo({
   description,
   long_description,
   price,
+  is_featured,
+  featured_order,
   onChange,
 }: ProductBasicInfoProps) {
   return (
@@ -156,6 +166,68 @@ export default function ProductBasicInfo({
               focus:ring-[var(--primary)]/20
             "
           />
+        </div>
+
+        {/* Destacado */}
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+          <div className="flex items-center gap-3 rounded-xl border border-gray-300 px-4 py-3">
+            <input
+              type="checkbox"
+              id="is_featured"
+              checked={is_featured}
+              onChange={(e) => onChange("is_featured", e.target.checked)}
+              className="
+                h-5
+                w-5
+                rounded
+                border-gray-300
+                text-[var(--primary)]
+                cursor-pointer
+                transition
+                focus:ring-2
+                focus:ring-[var(--primary)]/20
+              "
+            />
+            <label
+              htmlFor="is_featured"
+              className="text-sm font-semibold text-gray-700 cursor-pointer flex-1"
+            >
+              Marcar como destacado
+            </label>
+          </div>
+
+          <div>
+            <label className="mb-2 block text-sm font-semibold text-gray-700">
+              Orden de destacado
+            </label>
+
+            <input
+              type="number"
+              min="0"
+              value={featured_order}
+              onChange={(e) =>
+                onChange("featured_order", Number(e.target.value))
+              }
+              placeholder="0"
+              disabled={!is_featured}
+              className="
+                w-full
+                rounded-xl
+                border
+                border-gray-300
+                px-4
+                py-3
+                text-sm
+                outline-none
+                transition
+                disabled:bg-gray-100
+                disabled:cursor-not-allowed
+                focus:border-[var(--primary)]
+                focus:ring-2
+                focus:ring-[var(--primary)]/20
+              "
+            />
+          </div>
         </div>
       </div>
     </section>

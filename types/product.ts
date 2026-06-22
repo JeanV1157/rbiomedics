@@ -14,6 +14,9 @@ export interface Product {
   category_id: number;
 
   subcategory_id: number;
+  is_featured: boolean;
+
+  featured_order: number;
 
   created_at: string;
 

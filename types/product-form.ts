@@ -13,5 +13,9 @@ export interface ProductFormData {
 
   subcategory_id: number;
 
+  is_featured: boolean;
+
+  featured_order: number;
+
   specifications: ProductSpecificationForm[];
 }

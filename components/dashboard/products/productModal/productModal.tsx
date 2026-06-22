@@ -47,6 +47,10 @@ const emptyForm: ProductFormData = {
 
   subcategory_id: 0,
 
+  is_featured: false,
+
+  featured_order: 0,
+
   specifications: [],
 };
 
@@ -68,8 +72,6 @@ export default function ProductModal({
   const isFormValid =
     formData.title.trim() !== "" &&
     formData.description.trim() !== "" &&
-    formData.price !== null &&
-    formData.price > 0 &&
     formData.category_id > 0 &&
     formData.subcategory_id > 0 &&
     productImages.length > 0;
@@ -90,6 +92,10 @@ export default function ProductModal({
         category_id: initialData.category_id,
 
         subcategory_id: initialData.subcategory_id,
+
+        is_featured: initialData.is_featured,
+
+        featured_order: initialData.featured_order,
 
         specifications: initialData.specifications ?? [],
       });
@@ -289,6 +295,8 @@ export default function ProductModal({
                 description={formData.description}
                 long_description={formData.long_description}
                 price={formData.price}
+                is_featured={formData.is_featured}
+                featured_order={formData.featured_order}
                 onChange={(field, value) =>
                   setFormData((prev) => ({
                     ...prev,

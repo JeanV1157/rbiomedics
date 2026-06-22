@@ -20,7 +20,7 @@ export default function ClientsCarousel({
   const marqueeBrands = [...brands, ...brands];
 
   return (
-    <section className="py-16 bg-gray-50 overflow-hidden">
+    <section className="py-16 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4">
         {/* Title */}
         <div className="text-center mb-12">

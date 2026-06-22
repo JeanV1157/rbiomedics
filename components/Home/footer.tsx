@@ -15,7 +15,7 @@ export default function Footer() {
           {/* Logo & About */}
           <div>
             <Image
-              src="/images/logo3.png"
+              src="/images/RBIOMEDICS_footer1.png"
               alt="RBIOMEDICS"
               width={220}
               height={80}

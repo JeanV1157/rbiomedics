@@ -26,7 +26,7 @@ export default function NewsCarousel({ title, items }: NewsCarouselProps) {
   };
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 bg-(--surface-muted)/40">
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-10">
           <span className="inline-block px-4 py-1 rounded-full bg-[var(--surface)] text-[var(--primary)] text-sm font-semibold mb-4">
