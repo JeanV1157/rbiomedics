@@ -394,11 +394,7 @@ export default function ProductDetail({
       "
             >
               {relatedProducts.map((relatedProduct) => (
-                <ProductCard
-                  key={relatedProduct.id}
-                  product={relatedProduct}
-                  buttonText="Leer más"
-                />
+                <ProductCard key={relatedProduct.id} product={relatedProduct} />
               ))}
             </div>
           </section>

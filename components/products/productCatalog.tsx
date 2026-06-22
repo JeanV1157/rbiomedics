@@ -258,11 +258,7 @@ export default function ProductCatalog({ products, categories }: Props) {
     "
               >
                 {currentProducts.map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    buttonText="Leer más"
-                  />
+                  <ProductCard key={product.id} product={product} />
                 ))}
               </div>
             ) : (
