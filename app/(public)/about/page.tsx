@@ -13,15 +13,15 @@ const ABOUT_DATA = {
   ],
   logos: [
     {
-      image: "/images/logos/bpa.png",
+      image: "/images/brands/digemid-logo.png",
       alt: "BPA Logo",
     },
     {
-      image: "/images/logos/digemid.png",
+      image: "/images/brands/digemid-logo.png",
       alt: "DIGEMID Logo",
     },
     {
-      image: "/images/logos/ccl.png",
+      image: "/images/brands/digemid-logo.png",
       alt: "CCL Logo",
     },
   ],

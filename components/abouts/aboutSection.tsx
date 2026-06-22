@@ -128,7 +128,7 @@ export default function AboutSection({
                   width={160}
                   height={80}
                   className="
-                  max-h-16
+                  max-h-24
                   w-auto
                   object-contain
                 "
