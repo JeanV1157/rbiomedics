@@ -52,3 +52,18 @@ export function getHeroImageUrl(imagePath: string): string {
 
   return data.publicUrl;
 }
+
+export async function getActiveHeroImages() {
+  const { data, error } = await supabase
+    .from("hero_images")
+    .select("*")
+    .eq("is_active", true)
+    .order("order_index", { ascending: true });
+
+  if (error) throw error;
+
+  return data.map((item) => ({
+    ...item,
+    image_url: getHeroImageUrl(item.image_path),
+  }));
+}
