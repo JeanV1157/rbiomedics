@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Phone, Mail, MessageCircle, Music2 } from "lucide-react";
 import { IconFacebook } from "../icons/iconFacebook";
 import { IconInstagram } from "../icons/iconInstagram";
+import { FaWhatsapp } from "react-icons/fa";
 
 export default function Footer() {
   return (
@@ -115,7 +116,7 @@ export default function Footer() {
               </div>
 
               <div className="flex items-center gap-3">
-                <MessageCircle
+                <FaWhatsapp
                   size={18}
                   className="text-[var(--secondary)] flex-shrink-0"
                 />
@@ -134,21 +135,21 @@ export default function Footer() {
             {/* Social Icons */}
             <div className="mt-6 flex gap-3">
               <a
-                href="#"
+                href="https://www.facebook.com/share/18Yq5ZutaG/"
                 className="rounded-xl bg-[var(--secondary)] p-2 hover:bg-[var(--primary)] transition"
               >
                 <IconFacebook />
               </a>
 
               <a
-                href="#"
+                href="https://www.instagram.com/corp.rbiomedics?igsh=MTEwdGp6eTkyc3dlbQ=="
                 className="rounded-xl bg-[var(--accent)] p-2 hover:bg-[var(--primary)] transition"
               >
                 <IconInstagram />
               </a>
 
               <a
-                href="#"
+                href="https://www.tiktok.com/@corporacin.rbiome?_r=1&_t=ZS-96o1TyR1COi"
                 className="rounded-xl bg-white/10 p-2 hover:bg-[var(--primary)] transition"
               >
                 <Music2 size={18} />

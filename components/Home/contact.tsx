@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Phone, Mail, Clock3, MessageCircle, Building2 } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
 
 export default function ContactSection() {
   const [form, setForm] = useState({
@@ -114,7 +115,7 @@ ${form.message}`;
 
             <div className="space-y-6">
               <div className="flex gap-4">
-                <Phone className="text-[var(--primary)]" />
+                <FaWhatsapp className="text-[var(--primary)] h-7 w-7" />
                 <div>
                   <p className="font-semibold">WhatsApp</p>
                   <p className="text-[var(--muted)]">+51 961 446 461</p>

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Product } from "@/types/product";
 import ProductCard from "../cards/productCard";
+import Link from "next/link";
 
 interface FeaturedProductsProps {
   sectionTitle: string;
@@ -122,9 +123,12 @@ export default function FeaturedProducts({
 
         {/* CTA */}
         <div className="w-full pt-8 flex justify-center">
-          <button className="rounded-xl px-6 py-3 border border-primary font-semibold hover:bg-[var(--primary-dark)] hover:text-white transition">
+          <Link
+            href="/product"
+            className="rounded-xl px-6 py-3 border border-primary font-semibold hover:bg-[var(--primary-dark)] hover:text-white transition"
+          >
             Ver catálogo completo
-          </button>
+          </Link>
         </div>
       </div>
     </section>

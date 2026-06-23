@@ -4,18 +4,15 @@ import {
   Stethoscope,
   FlaskConical,
   TestTube,
-  ShieldCheck,
   Wrench,
-  Headphones,
   Settings,
   ClipboardPlus,
-  Building2,
 } from "lucide-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import Image from "next/image";
+import Link from "next/link";
 import { useRef } from "react";
 
-const SERVICES = [
+export const SERVICES = [
   {
     title: "Venta de Equipos Médicos",
     description:
@@ -53,7 +50,6 @@ const SERVICES = [
     icon: ClipboardPlus,
   },
 ];
-const SERVICES_BG = "/images/services3.webp";
 
 export default function ServicesSection() {
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -73,11 +69,11 @@ export default function ServicesSection() {
   };
 
   return (
-    <section id="services" className="relative py-20 overflow-hidden">
+    <section className="relative py-20 overflow-hidden">
       {/* Imagen de fondo */}
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-white/90" />
+
       <div className="relative w-full mx-auto px-4 md:px-6 lg:px-8">
         {/* Header */}
         <div className="max-w-3xl mx-auto text-center mb-14">
@@ -144,7 +140,7 @@ export default function ServicesSection() {
                   className="
             snap-start
             shrink-0
-            w-[320px]
+            w-[310px]
             md:w-[340px]
             lg:w-[360px]
             bg-white
@@ -214,8 +210,13 @@ export default function ServicesSection() {
           </button>
         </div>
       </div>
-      <div className="flex justify-center py-6">
-        <div className="h-px w-32 bg-[var(--border)]" />
+      <div className="w-full pt-8 flex justify-center">
+        <Link
+          href="/services"
+          className="rounded-xl px-6 py-3 border border-primary font-semibold hover:bg-[var(--primary-dark)] hover:text-white transition"
+        >
+          Ver todos los servicios
+        </Link>
       </div>
     </section>
   );

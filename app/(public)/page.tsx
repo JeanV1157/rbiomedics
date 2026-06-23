@@ -119,7 +119,7 @@ export default function Home() {
 
       <ServicesSection />
       <div className="flex justify-center py-6">
-        <div className="h-px w-150 bg-[var(--border)]" />
+        <div className="h-px w-50 md:w-90 lg:w-150 bg-[var(--border)]" />
       </div>
 
       <FeaturedProductsClient />

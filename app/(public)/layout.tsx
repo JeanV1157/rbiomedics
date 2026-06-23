@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Header from "@/components/Home/header";
 import Footer from "@/components/Home/footer";
 import TopBar from "@/components/Home/topBar";
+import ScrollToTop from "@/components/Home/ui/scrollTop";
+import { FloatingWhatsApp } from "@/components/Home/ui/floatingWhatsApp";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,9 +17,11 @@ export default function RootLayout({
 }>) {
   return (
     <>
+      <ScrollToTop />
       <TopBar />
       <Header />
       {children}
+      <FloatingWhatsApp />
       <Footer />
     </>
   );

@@ -37,7 +37,7 @@ export default function Header() {
             </Link>
 
             <Link
-              href="/#services"
+              href="/services"
               className="font-semibold hover:text-[var(--primary)] transition"
             >
               SERVICIOS
