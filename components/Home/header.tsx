@@ -111,7 +111,7 @@ export default function Header() {
             </Link>
 
             <Link
-              href="/#services"
+              href="/services"
               className="px-4 py-3 font-semibold hover:bg-gray-50"
               onClick={() => setIsMenuOpen(false)}
             >
