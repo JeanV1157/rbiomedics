@@ -50,12 +50,13 @@ export default function HeroBanner() {
             alt={`Banner ${index + 1}`}
             fill
             priority={index === 0}
+            sizes="100vw"
             className={`
-        absolute inset-0
-        object-cover
-        transition-opacity duration-1000 ease-in-out
-        ${current === index ? "opacity-100" : "opacity-0"}
-      `}
+    absolute inset-0
+    object-cover
+    transition-opacity duration-1000 ease-in-out
+    ${current === index ? "opacity-100" : "opacity-0"}
+  `}
           />
         ))}
       </div>

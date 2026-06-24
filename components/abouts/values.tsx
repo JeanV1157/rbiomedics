@@ -27,12 +27,8 @@ export default function MissionVisionSection({
       <div className="relative z-10 max-w-7xl mx-auto px-4 py-20 lg:py-28">
         {/* Header */}
         <div className="text-center mb-14">
-          <span className="inline-block rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-[var(--accent)] backdrop-blur-sm">
-            Nuestra Esencia
-          </span>
-
           <h2 className="mt-4 text-3xl md:text-4xl lg:text-5xl font-bold text-white">
-            Misión y Visión
+            Nuestra Esencia
           </h2>
 
           <p className="mt-4 max-w-3xl mx-auto text-white/80">
