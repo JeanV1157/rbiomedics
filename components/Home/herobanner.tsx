@@ -36,13 +36,13 @@ export default function HeroBanner() {
 
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % heroImages.length);
-    }, 5000);
+    }, 7000);
 
     return () => clearInterval(interval);
   }, [heroImages.length]);
   return (
     <section className="relative w-full overflow-hidden">
-      <div className="relative w-full aspect-[4/2] md:aspect-[16/7] lg:aspect-[16/6]">
+      <div className="relative w-full aspect-[4/2] md:aspect-[16/5] lg:aspect-[16/7]">
         {heroImages.map((image, index) => (
           <Image
             key={image}
@@ -65,7 +65,7 @@ export default function HeroBanner() {
         onClick={prevSlide}
         className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 bg-black/40 text-white p-1.5 md:p-2 rounded-full hover:bg-black/60 transition"
       >
-        <ChevronLeft className="w-5 h-5 md:w-7 md:h-7" />
+        <ChevronLeft className="w-3 h-3 md:w-7 md:h-7" />
       </button>
 
       {/* Flecha derecha */}
@@ -73,7 +73,7 @@ export default function HeroBanner() {
         onClick={nextSlide}
         className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 bg-black/40 text-white p-1.5 md:p-2 rounded-full hover:bg-black/60 transition"
       >
-        <ChevronRight className="w-5 h-5 md:w-7 md:h-7" />
+        <ChevronRight className="w-3 h-3 md:w-7 md:h-7" />
       </button>
 
       {/* Indicadores */}
@@ -82,7 +82,7 @@ export default function HeroBanner() {
           <button
             key={index}
             onClick={() => setCurrent(index)}
-            className={`h-3 w-3 rounded-full transition ${
+            className={`h-1.5 w-1.5 md:h-3 md:w-3 rounded-full transition ${
               current === index ? "bg-white" : "bg-white/50"
             }`}
           />

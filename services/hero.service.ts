@@ -10,17 +10,15 @@ const TABLE_NAME = "hero_images";
  */
 export async function getHeroImages(): Promise<HeroImage[]> {
   const { data, error } = await supabase
-    .from(TABLE_NAME)
+    .from("hero_images")
     .select("*")
+    .eq("is_active", true) // 👈 IMPORTANTE
     .order("order_index", { ascending: true });
 
-  if (error) {
-    throw new Error(error.message);
-  }
+  if (error) throw new Error(error.message);
 
   return data ?? [];
 }
-
 /**
  * Obtener una imagen por id
  */
