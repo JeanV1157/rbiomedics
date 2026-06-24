@@ -102,8 +102,8 @@ ${form.message}`;
                 hover:bg-[var(--primary-dark)]
               "
             >
-              <MessageCircle size={20} />
-              Enviar Consulta por WhatsApp
+              <Mail size={20} />
+              Enviar Correo
             </button>
           </div>
 

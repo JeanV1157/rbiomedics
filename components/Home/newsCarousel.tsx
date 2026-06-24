@@ -47,17 +47,14 @@ export default function NewsCarousel({ title, items }: NewsCarouselProps) {
               priority
               className="object-cover"
             />
-
-            {/* Overlay */}
-            <div className="absolute inset-0 bg-black/10" />
           </div>
 
           {/* Flecha izquierda */}
           <button
             onClick={previous}
             className="
-              absolute left-4 top-1/2 -translate-y-1/2
-              rounded-full bg-white/15 p-3
+              absolute left-0 md:left-4 top-1/2 -translate-y-1/2
+              rounded-full bg-white/15 p-0.5 md:p-3
               shadow-lg backdrop-blur-sm
               hover:bg-white
               transition
@@ -70,8 +67,8 @@ export default function NewsCarousel({ title, items }: NewsCarouselProps) {
           <button
             onClick={next}
             className="
-              absolute right-4 top-1/2 -translate-y-1/2
-              rounded-full bg-white/15 p-3
+              absolute right-0 md:right-4 top-1/2 -translate-y-1/2
+              rounded-full bg-white/15 p-0.5 md:p-3
               shadow-lg backdrop-blur-sm
               hover:bg-white
               transition

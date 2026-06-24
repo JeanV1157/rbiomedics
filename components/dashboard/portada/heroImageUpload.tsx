@@ -32,8 +32,18 @@ export default function HeroImageUpload({
 
   return (
     <div className="space-y-4">
-      <input type="file" accept="image/*" onChange={handleChange} />
+      {/* BOTÓN PERSONALIZADO */}
+      <label className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-[var(--primary)] px-4 py-2 text-white font-semibold hover:bg-[var(--primary-dark)] transition">
+        Subir imagen
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleChange}
+          className="hidden"
+        />
+      </label>
 
+      {/* PREVIEW */}
       {imageToShow && (
         <div className="relative w-full h-60">
           <Image

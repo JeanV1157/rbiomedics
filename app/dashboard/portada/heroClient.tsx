@@ -31,6 +31,10 @@ export default function HeroClient({ initialData }: HeroClientProps) {
 
     await loadHeroImages();
   }
+  const handleClose = () => {
+    setSelectedHero(null);
+    setIsModalOpen(false);
+  };
   return (
     <div className="space-y-8">
       <div>
@@ -61,7 +65,7 @@ export default function HeroClient({ initialData }: HeroClientProps) {
       <HeroModal
         open={isModalOpen}
         hero={selectedHero}
-        onClose={() => setIsModalOpen(false)}
+        onClose={handleClose}
         onSuccess={loadHeroImages}
       />
     </div>

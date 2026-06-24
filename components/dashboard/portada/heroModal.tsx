@@ -26,6 +26,13 @@ export default function HeroModal({ open, onClose, hero, onSuccess }: Props) {
     }
   }, [hero]);
 
+  useEffect(() => {
+    if (!open) {
+      setFile(null);
+      setPreview("");
+    }
+  }, [open]);
+
   if (!open) return null;
 
   const handleSubmit = async () => {
@@ -83,7 +90,7 @@ export default function HeroModal({ open, onClose, hero, onSuccess }: Props) {
           <button
             onClick={handleSubmit}
             disabled={loading}
-            className="px-4 py-2 rounded-lg bg-black text-white"
+            className="px-4 py-2 rounded-lg bg-[var(--primary)] hover:bg-[var(--primary-dark)] cursor-pointer text-white"
           >
             {loading ? "Guardando..." : "Guardar"}
           </button>
