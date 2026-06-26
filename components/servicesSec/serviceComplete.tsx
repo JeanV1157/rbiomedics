@@ -66,6 +66,11 @@ export default function ServicesSection() {
         {/* GRID */}
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {SERVICES.map((service) => {
+            const whatsappMessage = `Hola, estoy interesado en el servicio: ${service.title}. ¿Podrían darme más información?`;
+
+            const whatsappUrl = `https://wa.me/51961446461?text=${encodeURIComponent(
+              whatsappMessage,
+            )}`;
             const Icon = service.icon;
 
             return (
@@ -98,6 +103,24 @@ export default function ServicesSection() {
                 <p className="text-xs sm:text-sm text-[var(--muted)] leading-relaxed">
                   {service.description}
                 </p>
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="
+    mt-auto
+    w-fit
+    text-[12px]
+    font-normal
+    text-[var(--primary)]
+    border-b
+    border-[var(--primary)]
+    hover:opacity-70
+    transition
+  "
+                >
+                  Saber más
+                </a>
               </article>
             );
           })}

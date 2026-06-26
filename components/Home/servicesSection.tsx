@@ -132,27 +132,34 @@ export default function ServicesSection() {
     "
           >
             {SERVICES.map((service) => {
+              const whatsappMessage = `Hola, estoy interesado en el servicio: ${service.title}. ¿Podrían darme más información?`;
+
+              const whatsappUrl = `https://wa.me/51961446461?text=${encodeURIComponent(
+                whatsappMessage,
+              )}`;
               const Icon = service.icon;
 
               return (
                 <article
                   key={service.title}
                   className="
-            snap-start
-            shrink-0
-            w-[310px]
-            md:w-[340px]
-            lg:w-[360px]
-            bg-white
-            border
-            border-[var(--border)]
-            rounded-2xl
-            p-6
-            transition-all
-            duration-300
-            hover:-translate-y-1
-            hover:border-[var(--secondary)]
-            hover:shadow-xl
+              snap-start
+  shrink-0
+  w-[310px]
+  md:w-[340px]
+  lg:w-[360px]
+  bg-white
+  border
+  border-[var(--border)]
+  rounded-2xl
+  p-6
+  transition-all
+  duration-300
+  hover:-translate-y-1
+  hover:border-[var(--secondary)]
+  hover:shadow-xl
+  flex
+  flex-col
           "
                 >
                   <div
@@ -181,6 +188,24 @@ export default function ServicesSection() {
                   <p className="mt-3 text-[var(--muted)] leading-relaxed">
                     {service.description}
                   </p>
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="
+   mt-auto
+    w-fit
+    text-[12px]
+    font-normal
+    text-[var(--primary)]
+    border-b
+    border-[var(--primary)]
+    hover:opacity-70
+    transition
+  "
+                  >
+                    Saber más
+                  </a>
                 </article>
               );
             })}

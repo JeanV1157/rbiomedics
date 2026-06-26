@@ -26,6 +26,15 @@ export default function ProductDetail({
     y: 50,
   });
 
+  const whatsappMessagePrice = `Hola, estoy interesado en el producto: ${product.title}. ¿Podrían darme una cotización?`;
+  const whatsappMessageInfo = `Hola, quiero mas información del producto ${product.title}`;
+  const whatsappUrl = `https://wa.me/51961446461?text=${encodeURIComponent(
+    whatsappMessagePrice,
+  )}`;
+  const whatsappUrlInfo = `https://wa.me/51961446461?text=${encodeURIComponent(
+    whatsappMessageInfo,
+  )}`;
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
 
@@ -249,20 +258,27 @@ export default function ProductDetail({
               </div>
             </div>
             <div className="mt-10 flex gap-4">
-              <button
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="
-                  rounded-xl
-                  bg-[var(--primary)]
-                  px-8
-                  py-4
-                  text-white
-                  font-semibold
-                "
+    rounded-xl
+    bg-[var(--primary)]
+    px-8
+    py-4
+    text-white
+    font-semibold
+    inline-block
+  "
               >
                 Solicitar Cotización
-              </button>
+              </a>
 
-              <button
+              <a
+                href={whatsappUrlInfo}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="
                   rounded-xl
                   border
@@ -273,8 +289,8 @@ export default function ProductDetail({
                   font-semibold
                 "
               >
-                WhatsApp
-              </button>
+                Mas información
+              </a>
             </div>
           </div>
         </div>
