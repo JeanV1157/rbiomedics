@@ -37,7 +37,7 @@ export default function TopBar() {
 
         <div className="flex items-center gap-1 md:gap-2 min-w-0">
           <Mail size={14} className="text-[var(--accent)] shrink-0" />
-          <span className="truncate">rbiomedics@gmail.com</span>
+          <span className="truncate">gerencia@rbiomedics.com</span>
         </div>
       </div>
     </div>

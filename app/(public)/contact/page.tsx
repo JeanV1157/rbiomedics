@@ -4,7 +4,7 @@ import ContactSection from "@/components/Home/contact";
 
 export default function ContactPage() {
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen">
       <ContactSection />
     </main>
   );

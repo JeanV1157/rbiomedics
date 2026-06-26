@@ -69,7 +69,7 @@ export default function ServicesSection() {
   };
 
   return (
-    <section className="relative py-20 overflow-hidden">
+    <section className="relative py-10 md:py-20 overflow-hidden">
       {/* Imagen de fondo */}
 
       {/* Overlay */}

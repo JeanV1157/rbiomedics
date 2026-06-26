@@ -4,7 +4,7 @@ import { FaWhatsapp } from "react-icons/fa";
 export function FloatingWhatsApp() {
   return (
     <Link
-      href="https://wa.me/51961446461?text=Hola,%RBIOMEDICS."
+      href="https://wa.me/51961446461?text=Hola,RBIOMEDICS."
       target="_blank"
       rel="noopener noreferrer"
       className="

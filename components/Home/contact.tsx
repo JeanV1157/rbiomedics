@@ -5,6 +5,9 @@ import { Phone, Mail, Clock3, MessageCircle, Building2 } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 
 export default function ContactSection() {
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
   const [form, setForm] = useState({
     name: "",
     company: "",
@@ -13,21 +16,48 @@ export default function ContactSection() {
     message: "",
   });
 
-  const handleWhatsapp = () => {
-    const text = `Hola RBIOMEDICS,
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-Nombre: ${form.name}
-Institución / Empresa: ${form.company}
-Teléfono: ${form.phone}
-Correo: ${form.email}
+    setError("");
+    setSuccess(false);
 
-Consulta:
-${form.message}`;
+    if (!form.name || !form.email || !form.message) {
+      setError("Completa los campos obligatorios.");
+      return;
+    }
 
-    window.open(
-      `https://wa.me/51961446461?text=${encodeURIComponent(text)}`,
-      "_blank",
-    );
+    try {
+      setLoading(true);
+
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        setError(data?.message || "Error al enviar.");
+        return;
+      }
+
+      setSuccess(true);
+
+      setForm({
+        name: "",
+        company: "",
+        phone: "",
+        email: "",
+        message: "",
+      });
+    } catch (err) {
+      setError("Error de red. Intenta nuevamente.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -51,6 +81,7 @@ ${form.message}`;
             <div className="grid md:grid-cols-2 gap-5">
               <input
                 type="text"
+                name="firstName"
                 placeholder="Nombre completo"
                 className="rounded-xl border border-[var(--border)] px-4 py-3 outline-none focus:border-[var(--primary)]"
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
@@ -65,12 +96,14 @@ ${form.message}`;
 
               <input
                 type="tel"
+                name="phone"
                 placeholder="Teléfono"
                 className="rounded-xl border border-[var(--border)] px-4 py-3 outline-none focus:border-[var(--primary)]"
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
               />
 
               <input
+                name="email"
                 type="email"
                 placeholder="Correo electrónico"
                 className="rounded-xl border border-[var(--border)] px-4 py-3 outline-none focus:border-[var(--primary)]"
@@ -85,25 +118,30 @@ ${form.message}`;
               onChange={(e) => setForm({ ...form, message: e.target.value })}
             />
 
+            {success && (
+              <div className="mb-4 rounded-xl bg-green-100 px-4 py-3 text-green-700">
+                ✅ Mensaje enviado correctamente
+              </div>
+            )}
+
+            {error && (
+              <div className="mb-4 rounded-xl bg-red-100 px-4 py-3 text-red-700">
+                ❌ {error}
+              </div>
+            )}
+
             <button
-              onClick={handleWhatsapp}
+              onClick={handleSubmit}
+              disabled={loading}
               className="
-                mt-6
-                inline-flex
-                items-center
-                gap-2
-                rounded-xl
-                bg-[var(--primary)]
-                px-6
-                py-3
-                font-semibold
-                text-white
-                transition
-                hover:bg-[var(--primary-dark)]
+                mt-6 inline-flex items-center gap-2 rounded-xl
+                bg-[var(--primary)] px-6 py-3 font-semibold text-white
+                transition hover:bg-[var(--primary-dark)]
+                disabled:opacity-60
               "
             >
               <Mail size={20} />
-              Enviar Correo
+              {loading ? "Enviando..." : "Enviar correo"}
             </button>
           </div>
 
@@ -125,8 +163,9 @@ ${form.message}`;
               <div className="flex gap-4">
                 <Mail className="text-[var(--primary)]" />
                 <div>
-                  <p className="font-semibold">Correo</p>
-                  <p className="text-[var(--muted)]">rbiomedics@gmail.com</p>
+                  <p className="font-semibold">Correos</p>
+                  <p className="text-[var(--muted)]">ventas@rbiomedics.com</p>
+                  <p className="text-[var(--muted)]">gerencia@rbiomedics.com</p>
                 </div>
               </div>
 

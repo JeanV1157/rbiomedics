@@ -85,6 +85,7 @@ export default function Footer() {
           </div>
 
           {/* Services */}
+          {/* Services */}
           <div>
             <h3 className="mb-5 text-lg font-semibold text-[var(--accent)]">
               Servicios
@@ -93,10 +94,32 @@ export default function Footer() {
             <ul className="space-y-3 text-sm text-white/80">
               <li>Equipos Médicos</li>
               <li>Equipos de Laboratorio</li>
-              <li>Reactivos e Insumos</li>
               <li>Mantenimiento Técnico</li>
-              <li>Instalación y Soporte</li>
-              <li>Asesoría Biomédica</li>
+            </ul>
+
+            {/* Legal */}
+            <h3 className="mt-8 mb-5 text-lg font-semibold text-[var(--accent)]">
+              Legal
+            </h3>
+
+            <ul className="space-y-3 text-sm">
+              <li>
+                <Link
+                  href="/privacy-policy"
+                  className="hover:text-[var(--accent)] transition"
+                >
+                  Política de Privacidad
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  href="/libro"
+                  className="hover:text-[var(--accent)] transition"
+                >
+                  Libro de Reclamaciones
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -128,7 +151,14 @@ export default function Footer() {
                   size={18}
                   className="text-[var(--secondary)] flex-shrink-0"
                 />
-                <span>rbiomedics@gmail.com</span>
+                <span>ventas@rbiomedics.com</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <Mail
+                  size={18}
+                  className="text-[var(--secondary)] flex-shrink-0"
+                />
+                <span>gerencia@rbiomedics.com</span>
               </div>
             </div>
 
