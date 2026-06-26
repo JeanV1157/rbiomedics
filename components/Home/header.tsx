@@ -77,6 +77,8 @@ export default function Header() {
           {/* Desktop Social Icons */}
           <div className="hidden lg:flex items-center gap-2">
             <Link
+              target="_blank"
+              rel="noopener noreferrer"
               href="https://www.facebook.com/share/18Yq5ZutaG/"
               className="bg-[var(--secondary)] hover:bg-[var(--primary)] text-white p-2 rounded-lg transition"
             >
@@ -84,6 +86,8 @@ export default function Header() {
             </Link>
 
             <Link
+              target="_blank"
+              rel="noopener noreferrer"
               href="https://www.instagram.com/corp.rbiomedics?igsh=MTEwdGp6eTkyc3dlbQ=="
               className="bg-[var(--accent)] hover:bg-[var(--primary)] text-white p-2 rounded-lg transition"
             >
@@ -91,6 +95,8 @@ export default function Header() {
             </Link>
 
             <Link
+              target="_blank"
+              rel="noopener noreferrer"
               href="https://www.tiktok.com/@corporacin.rbiome?_r=1&_t=ZS-96o1TyR1COi"
               className="bg-[var(--primary-dark)] hover:bg-[var(--primary)] text-white p-2 rounded-lg transition"
             >

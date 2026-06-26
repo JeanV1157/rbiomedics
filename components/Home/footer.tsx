@@ -165,6 +165,8 @@ export default function Footer() {
             {/* Social Icons */}
             <div className="mt-6 flex gap-3">
               <a
+                target="_blank"
+                rel="noopener noreferrer"
                 href="https://www.facebook.com/share/18Yq5ZutaG/"
                 className="rounded-xl bg-[var(--secondary)] p-2 hover:bg-[var(--primary)] transition"
               >
@@ -172,6 +174,8 @@ export default function Footer() {
               </a>
 
               <a
+                target="_blank"
+                rel="noopener noreferrer"
                 href="https://www.instagram.com/corp.rbiomedics?igsh=MTEwdGp6eTkyc3dlbQ=="
                 className="rounded-xl bg-[var(--accent)] p-2 hover:bg-[var(--primary)] transition"
               >
@@ -179,6 +183,8 @@ export default function Footer() {
               </a>
 
               <a
+                target="_blank"
+                rel="noopener noreferrer"
                 href="https://www.tiktok.com/@corporacin.rbiome?_r=1&_t=ZS-96o1TyR1COi"
                 className="rounded-xl bg-white/10 p-2 hover:bg-[var(--primary)] transition"
               >

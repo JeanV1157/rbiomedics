@@ -263,7 +263,7 @@ export default function ProductDetail({
                 target="_blank"
                 rel="noopener noreferrer"
                 className="
-    rounded-xl
+    rounded-xl text-[12px] md:text-[16px]
     bg-[var(--primary)]
     px-8
     py-4
@@ -280,7 +280,7 @@ export default function ProductDetail({
                 target="_blank"
                 rel="noopener noreferrer"
                 className="
-                  rounded-xl
+                  rounded-xl text-[12px] md:text-[16px]
                   border
                   border-[var(--primary)]
                   px-8
