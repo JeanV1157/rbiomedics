@@ -29,7 +29,7 @@ export async function POST(req: Request) {
 
     await resend.emails.send({
       from: "Libro de Reclamaciones <gerencia@rbiomedics.com>", // Cambiarás esto cuando verifiques tu dominio
-      to: "prueba@rbiomedics.com",
+      to: "gerencia@rbiomedics.com",
       replyTo: email,
       subject: `📋 Nuevo ${reason} - Libro de Reclamaciones`,
 

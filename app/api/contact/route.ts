@@ -27,7 +27,7 @@ export async function POST(req: Request) {
     // EMAIL PRINCIPAL (a tu empresa)
     const adminEmail = await resend.emails.send({
       from: "RBIOMEDICS <ventas@rbiomedics.com>",
-      to: "prueba@rbiomedics.com",
+      to: "ventas@rbiomedics.com",
       replyTo: email,
       subject: `📩 Nueva solicitud de información - ${name}`,
       html: `
