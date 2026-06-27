@@ -17,6 +17,8 @@ export async function getCategories(): Promise<Category[]> {
     .order("name")
     .order("name", { ascending: true });
 
+  console.log("Categorías obtenidas:", data);
+
   if (error) {
     throw new Error(error.message);
   }

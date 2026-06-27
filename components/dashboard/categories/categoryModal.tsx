@@ -6,7 +6,7 @@ import { useState } from "react";
 interface CategoryModalProps {
   open: boolean;
   onClose: () => void;
-  onSave: (name: string) => void;
+  onSave: (name: string) => Promise<void>;
 
   initialData?: {
     id: number;
@@ -24,12 +24,12 @@ export default function CategoryModal({
 
   if (!open) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!name.trim()) return;
 
-    onSave(name);
+    await onSave(name);
 
     setName("");
     onClose();
