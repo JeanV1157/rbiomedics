@@ -6,27 +6,68 @@ import ScrollToTop from "@/components/Home/ui/scrollTop";
 import { FloatingWhatsApp } from "@/components/Home/ui/floatingWhatsApp";
 
 export const metadata: Metadata = {
-  title: "RBIOMEDICS | Equipos e Insumos Biomédicos",
+  metadataBase: new URL("https://rbiomedics.com"),
+
+  title: {
+    default:
+      "RBIOMEDICS | Equipos Biomédicos, Insumos Médicos y Tecnología Hospitalaria en Perú",
+    template: "%s | RBIOMEDICS",
+  },
+
   description:
-    "RBIOMEDICS ofrece equipos biomédicos, insumos médicos y soluciones especializadas para hospitales, clínicas, laboratorios y profesionales de la salud. Calidad, innovación y soporte especializado.",
+    "RBIOMEDICS es una empresa en Perú especializada en equipos biomédicos, insumos médicos, laboratorio clínico y soluciones hospitalarias para clínicas y hospitales.",
+
   keywords: [
-    "equipos biomédicos",
-    "insumos médicos",
-    "equipamiento hospitalario",
-    "equipos médicos",
-    "laboratorio clínico",
-    "hospitales",
-    "clínicas",
+    "equipos biomédicos Perú",
+    "insumos médicos Perú",
+    "equipos hospitalarios",
+    "laboratorio clínico Perú",
+    "proveedores médicos Perú",
     "tecnología médica",
-    "RBIOMEDICS",
-    "Perú",
   ],
+
   authors: [{ name: "RBIOMEDICS" }],
   creator: "RBIOMEDICS",
   publisher: "RBIOMEDICS",
+
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+
+  alternates: {
+    canonical: "https://rbiomedics.com",
+  },
+
+  openGraph: {
+    title: "RBIOMEDICS | Tecnología Biomédica en Perú",
+    description:
+      "Equipos biomédicos, insumos médicos y soluciones hospitalarias para clínicas y hospitales en Perú.",
+    url: "https://rbiomedics.com",
+    siteName: "RBIOMEDICS",
+    locale: "es_PE",
+    type: "website",
+    images: [
+      {
+        url: "https://rbiomedics.com/og-image.png",
+        width: 1200,
+        height: 630,
+      },
+    ],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "RBIOMEDICS Perú",
+    description:
+      "Equipos biomédicos, insumos médicos y tecnología hospitalaria.",
+    images: ["https://rbiomedics.com/og-image.png"],
   },
 };
 
@@ -35,14 +76,48 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "MedicalBusiness",
+    name: "RBIOMEDICS",
+    url: "https://rbiomedics.com",
+    logo: "https://rbiomedics.com/logo.png",
+    image: "https://rbiomedics.com/og-image.png",
+    description:
+      "Empresa especializada en equipos biomédicos, insumos médicos y soluciones hospitalarias en Perú.",
+    telephone: "+51-961-446-461",
+    address: {
+      "@type": "PostalAddress",
+      addressCountry: "PE",
+    },
+    areaServed: "Peru",
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "customer service",
+      telephone: "+51-961-446-461",
+    },
+  };
+
   return (
-    <>
-      <ScrollToTop />
-      <TopBar />
-      <Header />
-      {children}
-      <FloatingWhatsApp />
-      <Footer />
-    </>
+    <html lang="es">
+      <body>
+        {/* 🔥 SEO AVANZADO (Schema.org) */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLd),
+          }}
+        />
+
+        <ScrollToTop />
+        <TopBar />
+        <Header />
+
+        {children}
+
+        <FloatingWhatsApp />
+        <Footer />
+      </body>
+    </html>
   );
 }
