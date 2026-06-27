@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import DashboardStats from "@/components/dashboard/dashboardStats";
@@ -17,6 +17,8 @@ interface Props {
 }
 
 export default function DashboardPage({ stats }: Props) {
+  const [authenticated, setAuthenticated] = useState(false);
+  const [checkingSession, setCheckingSession] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -25,13 +27,25 @@ export default function DashboardPage({ stats }: Props) {
         data: { session },
       } = await supabase.auth.getSession();
 
-      if (!session) {
-        router.push("/auth/login");
+      if (session) {
+        setAuthenticated(true);
+      } else {
+        router.replace("/auth/login");
       }
+
+      setCheckingSession(false);
     };
 
     checkUser();
   }, [router]);
+
+  if (checkingSession) {
+    return null;
+  }
+
+  if (!authenticated) {
+    return null;
+  }
 
   return (
     <div className="space-y-10">
@@ -56,7 +70,7 @@ export default function DashboardPage({ stats }: Props) {
         totalHeroImages={stats.totalHeroImages}
         totalProducts={stats.totalProducts}
       />
-      <QuickActions />
+      {/* <QuickActions /> */}
     </div>
   );
 }

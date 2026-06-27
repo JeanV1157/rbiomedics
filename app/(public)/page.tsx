@@ -5,6 +5,7 @@ import HeroBanner from "@/components/Home/herobanner";
 import NewsCarousel from "@/components/Home/newsCarousel";
 import ServicesSection from "@/components/Home/servicesSection";
 import CustomerService from "@/components/Home/customerService";
+import IsoSection from "@/components/Home/isoSection";
 
 const BRANDS = [
   {
@@ -116,6 +117,7 @@ export default function Home() {
   return (
     <>
       <HeroBanner />
+      <IsoSection />
 
       <ServicesSection />
       <div className="flex justify-center py-6">

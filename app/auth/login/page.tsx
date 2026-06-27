@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
-import { useState } from "react";
+import { ArrowLeft, TruckElectricIcon } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 

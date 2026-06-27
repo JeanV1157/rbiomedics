@@ -16,7 +16,7 @@ export default function Header() {
       <div className="bg-white py-3 px-4 border-b border-[var(--border)] ">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Logo */}
-          <div className="flex-shrink-0">
+          <Link href="/" className="flex-shrink-0">
             <Image
               src="/images/RBIOMEDICS_header.png"
               alt="RBIOMEDICS"
@@ -25,7 +25,7 @@ export default function Header() {
               className="h-10 md:h-18 lg:h-18 w-auto object-contain"
               priority
             />
-          </div>
+          </Link>
 
           {/* Navbar */}
           <nav className="hidden lg:flex items-center gap-8 text-[var(--primary-dark)]">
