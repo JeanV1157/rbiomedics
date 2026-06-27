@@ -6,7 +6,7 @@ import ScrollToTop from "@/components/Home/ui/scrollTop";
 import { FloatingWhatsApp } from "@/components/Home/ui/floatingWhatsApp";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://rbiomedics.com"),
+  metadataBase: new URL("https://www.rbiomedics.com"),
 
   title: {
     default:
@@ -42,20 +42,20 @@ export const metadata: Metadata = {
   },
 
   alternates: {
-    canonical: "https://rbiomedics.com",
+    canonical: "https://www.rbiomedics.com",
   },
 
   openGraph: {
     title: "RBIOMEDICS | Tecnología Biomédica en Perú",
     description:
       "Equipos biomédicos, insumos médicos y soluciones hospitalarias para clínicas y hospitales en Perú.",
-    url: "https://rbiomedics.com",
+    url: "https://www.rbiomedics.com",
     siteName: "RBIOMEDICS",
     locale: "es_PE",
     type: "website",
     images: [
       {
-        url: "https://rbiomedics.com/og-image.png",
+        url: "https://www.rbiomedics.com/og-image.png",
         width: 1200,
         height: 630,
       },
@@ -67,7 +67,7 @@ export const metadata: Metadata = {
     title: "RBIOMEDICS Perú",
     description:
       "Equipos biomédicos, insumos médicos y tecnología hospitalaria.",
-    images: ["https://rbiomedics.com/og-image.png"],
+    images: ["https://www.rbiomedics.com/og-image.png"],
   },
 };
 
@@ -80,9 +80,9 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "MedicalBusiness",
     name: "RBIOMEDICS",
-    url: "https://rbiomedics.com",
-    logo: "https://rbiomedics.com/logo.png",
-    image: "https://rbiomedics.com/og-image.png",
+    url: "https://www.rbiomedics.com",
+    logo: "https://www.rbiomedics.com/logo.png",
+    image: "https://www.rbiomedics.com/og-image.png",
     description:
       "Empresa especializada en equipos biomédicos, insumos médicos y soluciones hospitalarias en Perú.",
     telephone: "+51-961-446-461",

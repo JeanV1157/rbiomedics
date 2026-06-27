@@ -3,23 +3,23 @@ import { MetadataRoute } from "next";
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: "https://rbiomedics.com",
+      url: "https://www.rbiomedics.com",
       lastModified: new Date(),
     },
     {
-      url: "https://rbiomedics.com/services",
+      url: "https://www.rbiomedics.com/services",
       lastModified: new Date(),
     },
     {
-      url: "https://rbiomedics.com/product",
+      url: "https://www.rbiomedics.com/product",
       lastModified: new Date(),
     },
     {
-      url: "https://rbiomedics.com/about",
+      url: "https://www.rbiomedics.com/about",
       lastModified: new Date(),
     },
     {
-      url: "https://rbiomedics.com/contact",
+      url: "https://www.rbiomedics.com/contact",
       lastModified: new Date(),
     },
   ];
