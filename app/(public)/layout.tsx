@@ -99,25 +99,23 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="es">
-      <body>
-        {/* 🔥 SEO AVANZADO (Schema.org) */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(jsonLd),
-          }}
-        />
+    <>
+      {/* 🔥 SEO AVANZADO (Schema.org) */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd),
+        }}
+      />
 
-        <ScrollToTop />
-        <TopBar />
-        <Header />
+      <ScrollToTop />
+      <TopBar />
+      <Header />
 
-        {children}
+      {children}
 
-        <FloatingWhatsApp />
-        <Footer />
-      </body>
-    </html>
+      <FloatingWhatsApp />
+      <Footer />
+    </>
   );
 }

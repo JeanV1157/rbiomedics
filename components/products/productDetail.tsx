@@ -2,6 +2,9 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkBreaks from "remark-breaks";
+import remarkGfm from "remark-gfm";
 import Link from "next/link";
 import { ChevronRight, ShieldCheck, Store } from "lucide-react";
 import ProductCard from "../cards/productCard";
@@ -311,20 +314,35 @@ export default function ProductDetail({
               text-2xl
               font-bold
               text-[var(--primary-dark)]
+              pb-4
             "
           >
             Descripción del producto
           </h2>
 
-          <p
+          <div
             className="
-              mt-6
-              leading-8
-              text-[var(--muted)]
-            "
+    prose
+    prose-md
+    max-w-none
+    prose-headings:text-[var(--primary-dark)]
+    prose-strong:text-[var(--primary-dark)]
+    prose-a:text-[var(--primary)]
+    prose-table:border
+    prose-th:bg-[var(--surface)]
+     prose-ul:my-2
+    prose-ol:my-2
+
+    prose-li:my-0
+    prose-li:leading-6
+
+    prose-p:my-2
+  "
           >
-            {product.long_description}
-          </p>
+            <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>
+              {product.long_description}
+            </ReactMarkdown>
+          </div>
         </div>
         {product.specifications && product.specifications.length > 0 && (
           <div
