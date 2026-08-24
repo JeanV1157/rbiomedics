@@ -6,7 +6,7 @@ import ReactMarkdown from "react-markdown";
 import remarkBreaks from "remark-breaks";
 import remarkGfm from "remark-gfm";
 import Link from "next/link";
-import { ChevronRight, ShieldCheck, Store } from "lucide-react";
+import { ChevronRight, ShieldCheck, Store, Handshake } from "lucide-react";
 import ProductCard from "../cards/productCard";
 import { Product } from "@/types/product";
 import { Category } from "@/types/category";
@@ -258,6 +258,12 @@ export default function ProductDetail({
               <div className="flex items-center gap-2 text-[var(--muted)]">
                 <ShieldCheck size={18} />
                 <span className="font-medium">Producto con Garantía</span>
+              </div>
+              <div className="flex items-center gap-2 text-[var(--muted)]">
+                <Handshake size={18} />
+                <span className="font-medium">
+                  Distribuidores al por Mayor y Menor
+                </span>
               </div>
             </div>
             <div className="mt-10 flex gap-4">
