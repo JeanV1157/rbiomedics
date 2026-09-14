@@ -1,6 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
+
+const MAX_SIZE_MB = 5;
 
 interface Props {
   file: File | null;
@@ -10,6 +13,7 @@ interface Props {
   setPreview: (url: string) => void;
 
   existingImage?: string;
+  onError?: (error: string | null) => void;
 }
 
 export default function HeroImageUpload({
@@ -18,12 +22,31 @@ export default function HeroImageUpload({
   preview,
   setPreview,
   existingImage,
+  onError,
 }: Props) {
+  const [error, setError] = useState<string | null>(null);
+
+  const reportError = (message: string | null) => {
+    setError(message);
+    onError?.(message);
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0];
 
     if (!selected) return;
 
+    if (!selected.type.startsWith("image/")) {
+      reportError("Selecciona un archivo de imagen válido.");
+      return;
+    }
+
+    if (selected.size > MAX_SIZE_MB * 1024 * 1024) {
+      reportError(`La imagen supera el límite de ${MAX_SIZE_MB}MB.`);
+      return;
+    }
+
+    reportError(null);
     setFile(selected);
     setPreview(URL.createObjectURL(selected));
   };
@@ -42,6 +65,8 @@ export default function HeroImageUpload({
           className="hidden"
         />
       </label>
+
+      {error && <p className="text-sm text-red-600">{error}</p>}
 
       {/* PREVIEW */}
       {imageToShow && (

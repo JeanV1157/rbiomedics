@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 
 import { createHero, updateHero } from "@/services/heroCrud.service";
+import { getHeroImageUrl } from "@/services/heroImage.service";
 import { HeroImage } from "@/types/hero-image";
 import HeroImageUpload from "./heroImageUpload";
 
@@ -16,6 +17,7 @@ interface Props {
 export default function HeroModal({ open, onClose, hero, onSuccess }: Props) {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string>("");
+  const [uploadError, setUploadError] = useState<string | null>(null);
 
   const [loading, setLoading] = useState(false);
 
@@ -23,6 +25,7 @@ export default function HeroModal({ open, onClose, hero, onSuccess }: Props) {
     if (!hero) {
       setFile(null);
       setPreview("");
+      setUploadError(null);
     }
   }, [hero]);
 
@@ -30,6 +33,7 @@ export default function HeroModal({ open, onClose, hero, onSuccess }: Props) {
     if (!open) {
       setFile(null);
       setPreview("");
+      setUploadError(null);
     }
   }, [open]);
 
@@ -79,7 +83,8 @@ export default function HeroModal({ open, onClose, hero, onSuccess }: Props) {
           setFile={setFile}
           preview={preview}
           setPreview={setPreview}
-          existingImage={hero?.image_path}
+          existingImage={hero ? getHeroImageUrl(hero.image_path) : undefined}
+          onError={setUploadError}
         />
 
         <div className="flex justify-end gap-3">
@@ -89,8 +94,8 @@ export default function HeroModal({ open, onClose, hero, onSuccess }: Props) {
 
           <button
             onClick={handleSubmit}
-            disabled={loading}
-            className="px-4 py-2 rounded-lg bg-[var(--primary)] hover:bg-[var(--primary-dark)] cursor-pointer text-white"
+            disabled={loading || !!uploadError}
+            className="px-4 py-2 rounded-lg bg-[var(--primary)] hover:bg-[var(--primary-dark)] cursor-pointer text-white disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? "Guardando..." : "Guardar"}
           </button>

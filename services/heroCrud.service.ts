@@ -23,17 +23,29 @@ interface UpdateHeroData {
   is_active: boolean;
 }
 
+async function revalidateHeroCache(): Promise<void> {
+  try {
+    await fetch("/api/revalidate-hero", { method: "POST" });
+  } catch (err) {
+    console.error("No se pudo invalidar el cache de la portada:", err);
+  }
+}
+
 /**
  * Crear Hero
  */
 export async function createHero(data: CreateHeroData): Promise<HeroImage> {
   const imagePath = await uploadHeroImage(data.file);
 
-  return await createHeroImage({
+  const hero = await createHeroImage({
     image_path: imagePath,
     order_index: data.order_index,
     is_active: data.is_active,
   });
+
+  await revalidateHeroCache();
+
+  return hero;
 }
 
 /**
@@ -56,11 +68,15 @@ export async function updateHero(data: UpdateHeroData): Promise<HeroImage> {
     imagePath = newImagePath;
   }
 
-  return await updateHeroImage(data.id, {
+  const updated = await updateHeroImage(data.id, {
     image_path: imagePath,
     order_index: data.order_index,
     is_active: data.is_active,
   });
+
+  await revalidateHeroCache();
+
+  return updated;
 }
 
 /**
@@ -92,4 +108,6 @@ export async function removeHero(id: string): Promise<void> {
   // 4. Solo si la eliminación del Storage fue exitosa,
   //    eliminar el registro de la tabla
   await deleteHeroImage(id);
+
+  await revalidateHeroCache();
 }

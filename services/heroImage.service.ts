@@ -1,4 +1,6 @@
+import { unstable_cache } from "next/cache";
 import { supabase } from "@/lib/supabase";
+import { compressImageFile } from "@/lib/image/compressImage";
 
 const BUCKET_NAME = "hero";
 
@@ -6,14 +8,15 @@ const BUCKET_NAME = "hero";
  * Subir imagen al Storage
  */
 export async function uploadHeroImage(file: File): Promise<string> {
-  const fileExt = file.name.split(".").pop();
+  const optimized = await compressImageFile(file);
+  const fileExt = optimized.name.split(".").pop();
   const fileName = `${crypto.randomUUID()}.${fileExt}`;
 
   const filePath = fileName;
 
   const { error } = await supabase.storage
     .from(BUCKET_NAME)
-    .upload(filePath, file, {
+    .upload(filePath, optimized, {
       cacheControl: "3600",
       upsert: false,
     });
@@ -67,3 +70,9 @@ export async function getActiveHeroImages() {
     image_url: getHeroImageUrl(item.image_path),
   }));
 }
+
+export const getActiveHeroImagesCached = unstable_cache(
+  async () => getActiveHeroImages(),
+  ["active-hero-images"],
+  { revalidate: 60, tags: ["hero-images"] },
+);
